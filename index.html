@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -13,6 +14,7 @@
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
+
 <body>
     <div id="app">
         <header>
@@ -30,7 +32,6 @@
                 <span id="user-display">Invitado</span>
                 <div class="actions">
                     <button id="btn-settings" title="Ajustes">⚙️</button>
-                    <button id="btn-logout" title="Salir">🚪</button>
                 </div>
             </div>
         </header>
@@ -52,22 +53,29 @@
                 <!-- Pressure Card -->
                 <section class="card pressure-card">
                     <div class="card-header">
-                        <h2>PRESIÓN ACTUAL</h2>
+                        <h2>PRESIÓN</h2>
                         <div id="pressure-alarm" class="alarm-badge hidden">⚠️</div>
                     </div>
-                    <div class="pressure-value">
-                        <span id="txt-pressure">--</span>
-                        <span class="unit">PSI</span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stat">
+                    <div class="pressure-row">
+                        <div class="pressure-item">
+                            <span class="label">ACTUAL</span>
+                            <div class="val-box">
+                                <span id="txt-pressure">--</span>
+                                <span class="unit">PSI</span>
+                            </div>
+                        </div>
+                        <div class="pressure-sep">|</div>
+                        <div class="pressure-item">
                             <span class="label">SETPOINT</span>
-                            <span id="txt-setpoint" class="value">-- PSI</span>
+                            <div class="val-box">
+                                <span id="txt-setpoint">--</span>
+                                <span class="unit">PSI</span>
+                            </div>
                         </div>
-                        <div class="stat right">
-                            <span class="label">OUTPUT</span>
-                            <span id="txt-output" class="value">-- %</span>
-                        </div>
+                    </div>
+                    <div class="card-footer-v2">
+                        <span class="label">SALIDA DE CONTROL:</span>
+                        <span id="txt-output" class="value">-- %</span>
                     </div>
                 </section>
 
@@ -117,4 +125,5 @@
         }
     </script>
 </body>
+
 </html>

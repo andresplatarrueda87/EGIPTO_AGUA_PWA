@@ -203,11 +203,18 @@ const UI = {
         }
     },
 
+    formatVal(val, decimals = 2) {
+        const n = parseFloat(val);
+        return isNaN(n) ? '--' : n.toFixed(decimals);
+    },
+
     updateDashboard() {
         const pTag = State.tags.pressure;
-        document.getElementById('txt-pressure').innerText = pTag.value;
-        document.getElementById('txt-setpoint').innerText = State.tags.setpoint.value + ' PSI';
-        document.getElementById('txt-output').innerText = State.tags.output.value + ' %';
+        document.getElementById('txt-pressure').innerText = this.formatVal(pTag.value);
+        document.getElementById('txt-setpoint').innerText = this.formatVal(State.tags.setpoint.value);
+        
+        const outEl = document.getElementById('txt-output');
+        if (outEl) outEl.innerText = this.formatVal(State.tags.output.value) + ' %';
 
         const alarm = document.getElementById('pressure-alarm');
         const pVal = parseFloat(pTag.value);
@@ -226,7 +233,7 @@ const UI = {
             const sVal = pump.status.value;
             statusEl.innerText = this.getPumpStatusText(sVal);
             statusEl.className = 'pump-status ' + this.getPumpStatusClass(sVal);
-            freqEl.innerText = pump.frequency.value + ' Hz';
+            freqEl.innerText = this.formatVal(pump.frequency.value) + ' Hz';
             prioEl.innerText = pump.priority.value;
             imgEl.src = this.getPumpIcon(sVal, pump.id);
 
@@ -373,10 +380,10 @@ const MQTT = {
             this.client.subscribe(CONFIG.TOPICS.HEARTBEAT);
         });
 
-        this.client.on('message', (topic, payload) => {
+        this.client.on('message', (topic, payload, packet) => {
             const topicLower = topic.toLowerCase();
             const message = payload.toString();
-            this.handleMessage(topicLower, message);
+            this.handleMessage(topicLower, message, packet);
         });
 
         this.client.on('close', () => {
