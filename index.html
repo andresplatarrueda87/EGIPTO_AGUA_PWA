@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EGIPTO AGUA | TAPA SCADA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3fb950">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link rel="icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div class="header-top">
+                <div class="brand">
+                    <img src="Kikes_image_1.png" alt="KIKES Logo" class="logo">
+                    <h1>EGIPTO AGUA</h1>
+                </div>
+                <div id="status-indicator" class="status-indicator">
+                    <span class="dot"></span>
+                    <span class="label">CONNECTING...</span>
+                </div>
+            </div>
+            <div class="header-bottom">
+                <span id="user-display">Invitado</span>
+                <div class="actions">
+                    <button id="btn-settings" title="Ajustes">⚙️</button>
+                    <button id="btn-logout" title="Salir">🚪</button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- PLC Status Card -->
+            <section id="system-status" class="status-card">
+                <div class="status-content">
+                    <span class="icon">⚠️</span>
+                    <div class="status-text">
+                        <h3>SISTEMA DESCONECTADO</h3>
+                        <p>Iniciando conexión...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Pressure Card -->
+                <section class="card pressure-card">
+                    <div class="card-header">
+                        <h2>PRESIÓN ACTUAL</h2>
+                        <div id="pressure-alarm" class="alarm-badge hidden">⚠️</div>
+                    </div>
+                    <div class="pressure-value">
+                        <span id="txt-pressure">--</span>
+                        <span class="unit">PSI</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stat">
+                            <span class="label">SETPOINT</span>
+                            <span id="txt-setpoint" class="value">-- PSI</span>
+                        </div>
+                        <div class="stat right">
+                            <span class="label">OUTPUT</span>
+                            <span id="txt-output" class="value">-- %</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pumps Section -->
+                <div id="pumps-container" class="pumps-list">
+                    <!-- Pumps will be injected here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Modals/Panels -->
+        <div id="settings-panel" class="side-panel hidden">
+            <div class="panel-content">
+                <h2>AJUSTES</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <strong>Notificaciones</strong>
+                        <p>Recibir alertas de presión y fallas</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="chk-notifications">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <strong>Diagnóstico</strong>
+                        <p>Mostrar info técnica de cada tag</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="chk-diagnostics">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <button id="close-settings">Cerrar</button>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(err => {
+                    console.warn('Service Worker registration failed:', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
