@@ -148,7 +148,8 @@ main { padding: 0.4rem; max-width: 500px; margin: 0 auto; }
     justify-content: center;
     align-items: flex-end;
 }
-.prio-badge { background: var(--accent-blue); padding: 0.1rem 0.6rem; border-radius: 4px; font-size: 0.85rem; }
+.pump-priority .label { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.1rem; letter-spacing: 0.5px; }
+.prio-badge { background: var(--accent-blue); padding: 0.1rem 0.6rem; border-radius: 4px; font-size: 1.2rem; font-weight: 800; min-width: 30px; text-align: center; }
 
 .diagnostic-badge-root { display: flex; justify-content: space-between; font-size: 0.55rem; padding-bottom: 2px; }
 .diag-status.diag-live { color: var(--accent-green); }
